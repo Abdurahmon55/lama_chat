@@ -6,29 +6,30 @@ import Login from './page/Login'
 import { useDispatch, useSelector } from 'react-redux'
 import { getAuth, selectAuth } from './data/authSlice'
 import { jwtDecode } from 'jwt-decode'
+import Message from './components/message/Message'
 function App() {
 
-  const authId=useSelector(selectAuth)
-  const dispatch=useDispatch()
-  const naviget=useNavigate()
-  
-  useEffect(() => { 
+  const authId = useSelector(selectAuth)
+  const dispatch = useDispatch()
+  const naviget = useNavigate()
+
+  useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       const decoded = jwtDecode(token);
       dispatch(getAuth(decoded.user_id))
     }
-    else{
+    else {
       naviget('/login/')
     }
   }, []);
-  
+
   return (
     <div>
       <Routes>
-        {authId ? 
-        <Route path="/" element={<Home />} />
-        : null}
+        {authId ?
+            <Route path="/" element={<Home />} />
+          : null}
         <Route path="login/" element={<Login />} />
         <Route path="register/" element={<Register />} />
       </Routes>

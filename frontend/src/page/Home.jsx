@@ -1,4 +1,6 @@
 import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Message from '../components/message/Message'
 import Sidebar from '../components/sidebar/Sidebar'
 
 function Home() {
@@ -8,7 +10,9 @@ function Home() {
         <div className='row-span-3 col-span-2 border border-red-500'><Sidebar/></div>
         <div className='row-span-3 col-span-3 flex flex-col border h-full border-blue-500'>
         <div className='border border-red-500 '>a</div>
-        <div className='border border-black h-full flex items-end'>b</div>
+        <div className='border border-black h-full flex items-end'>
+         <Message/>
+        </div>
         <div className='border border-red-500'>c</div>
         </div>
       </div>

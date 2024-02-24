@@ -2,13 +2,15 @@ import React from 'react'
 import useFetch from '../../hook/useFetch'
 import userImg from '../../image/default.jpg'
 import { Link, useNavigate } from 'react-router-dom'
-import { selectAuth } from '../../data/authSlice'
-import { useSelector } from 'react-redux'
+import { selectAuth, setContact } from '../../data/authSlice'
+import { useDispatch, useSelector } from 'react-redux'
 function Sidebar() {
     const [contact, error] = useFetch('http://127.0.0.1:8000/api/v1/user/')
     const authId = useSelector(selectAuth)
+    const dispatch=useDispatch()
     const auth = contact && contact.find((item)=>item.id==authId)
     const naviget = useNavigate()
+
     const sigiOut = () => {
         localStorage.clear()
         naviget('/login/')
@@ -39,7 +41,7 @@ function Sidebar() {
                             <div>
                                 <img className='w-8 rounded-full' src={userImg} alt="" />
                             </div>
-                            <div className='flex flex-col'>
+                            <div onClick={()=>dispatch(setContact(item.id))} className='flex flex-col'>
                                 <span className='text-xs font-semibold'>{item.username}</span>
                                 <span className='text-xs'>Lorem ipsum dolor sit.</span>
                             </div>
