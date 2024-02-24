@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
-
+import React, { useEffect } from 'react'
+import Home from './page/Home'
+import { Route, Routes, useNavigate } from 'react-router-dom'
+import Register from './page/Register'
+import Login from './page/Login'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAuth, selectAuth } from './data/authSlice'
+import { jwtDecode } from 'jwt-decode'
 function App() {
+
+  const authId=useSelector(selectAuth)
+  const dispatch=useDispatch()
+  const naviget=useNavigate()
+  
+  useEffect(() => { 
+    const token = localStorage.getItem('token');
+    if (token) {
+      const decoded = jwtDecode(token);
+      dispatch(getAuth(decoded.user_id))
+    }
+    else{
+      naviget('/login/')
+    }
+  }, []);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Routes>
+        {authId ? 
+        <Route path="/" element={<Home />} />
+        : null}
+        <Route path="login/" element={<Login />} />
+        <Route path="register/" element={<Register />} />
+      </Routes>
+
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

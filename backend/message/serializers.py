@@ -2,7 +2,6 @@ from rest_framework import serializers
 from .models import ChatModel
 from django.contrib.auth import get_user_model
 
-
 class chatModelSerializer(serializers.ModelSerializer):
     class Meta:
         model=ChatModel
@@ -11,4 +10,4 @@ class chatModelSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=get_user_model()
-        fields=['id', 'username', 'last_login']
+        fields=['id', 'last_login', 'username']
