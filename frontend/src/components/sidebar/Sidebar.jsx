@@ -15,6 +15,11 @@ function Sidebar() {
         localStorage.clear()
         naviget('/login/')
     }
+    
+    const senData=(id)=>{
+        localStorage.setItem('id', id)
+        dispatch(setContact(id))
+    }
     return (
         <div>
             <div className='text-white bg-slate-500 p-2 flex justify-between items-center'>
@@ -41,7 +46,7 @@ function Sidebar() {
                             <div>
                                 <img className='w-8 rounded-full' src={userImg} alt="" />
                             </div>
-                            <div onClick={()=>dispatch(setContact(item.id))} className='flex flex-col'>
+                            <div onClick={()=>senData(item.id)} className='flex flex-col'>
                                 <span className='text-xs font-semibold'>{item.username}</span>
                                 <span className='text-xs'>Lorem ipsum dolor sit.</span>
                             </div>

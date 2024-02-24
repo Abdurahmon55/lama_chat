@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Message from '../components/message/Message'
+import SendMessage from '../components/message/SendMessage'
 import Sidebar from '../components/sidebar/Sidebar'
 
 function Home() {
@@ -13,7 +14,7 @@ function Home() {
         <div className='border border-black h-full flex items-end'>
          <Message/>
         </div>
-        <div className='border border-red-500'>c</div>
+        <div className='border border-red-500'><SendMessage/></div>
         </div>
       </div>
     </div> 

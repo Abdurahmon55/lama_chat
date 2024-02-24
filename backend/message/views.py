@@ -11,6 +11,10 @@ class ChatViews(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['sender','take_message']
 
+class ChatDetailViews(generics.RetrieveUpdateDestroyAPIView):
+    queryset=ChatModel.objects.all()
+    serializer_class=chatModelSerializer
+
 class UserViews(generics.ListAPIView):
     queryset=get_user_model().objects.all()
     serializer_class=UserSerializer
