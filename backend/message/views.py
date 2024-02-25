@@ -1,20 +1,17 @@
 from django.shortcuts import render
 from rest_framework import generics
-from .models import ChatModel
-from .serializers import chatModelSerializer, UserSerializer
-from django_filters.rest_framework import DjangoFilterBackend
-from django.contrib.auth import get_user_model
-# Create your views here.
-class ChatViews(generics.ListCreateAPIView):
-    queryset=ChatModel.objects.all()
-    serializer_class=chatModelSerializer
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['sender','take_message']
+from .models import *
+from .serializers import *
 
-class ChatDetailViews(generics.RetrieveUpdateDestroyAPIView):
-    queryset=ChatModel.objects.all()
-    serializer_class=chatModelSerializer
 
-class UserViews(generics.ListAPIView):
-    queryset=get_user_model().objects.all()
-    serializer_class=UserSerializer
+def Views(name, views, model, serializer):
+    class name(views):
+        queryset = model.objects.all()
+        serializer_class = serializer
+    return name  
+
+ContactViews=Views('ContactViews', generics.ListCreateAPIView, Contact, ContactSerializer)
+ProfileViews=Views('ProfileViews', generics.ListCreateAPIView, Profil, ProfilSerializer)
+MessageViews=Views('MessageViews', generics.ListCreateAPIView, Message, MessageSerializer)
+AddImageViews=Views('AddImageViews', generics.ListCreateAPIView, AddImage, AddImageSerializer)
+SendImageViews=Views('SendImageViews', generics.ListCreateAPIView, SendImage, SendImageSerializer)

@@ -32,7 +32,7 @@ function Message() {
     }, [contact])
 
     return (
-        <div className='w-full'>
+        <div className='w-full h-[50vh] overflow-y-scroll'>
             {data && data.map((item) => (
                 <MessageDetail key={item.id}{...item}/>
             ))}
