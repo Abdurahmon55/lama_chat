@@ -43,9 +43,17 @@ class AddImageViews(generics.ListCreateAPIView):
     filter_backends = [DjangoFilterBackend]
     filterset_fields =['profil']   
 
+class SaveViews(generics.ListCreateAPIView):
+    queryset = SaveMessage.objects.all()
+    serializer_class = SaveSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields =['profil', 'messageId']  
 
 ContactViews=Views('ContactViews', generics.ListCreateAPIView, Contact, ContactSerializer)
+SendImageDetailViews=Views('SendImageDetailViews', generics.RetrieveDestroyAPIView, SendImage, SendImageSerializer)
+SaveDetailViews=Views('SaveDetailView', generics.RetrieveDestroyAPIView, SaveMessage, SaveSerializer)
 ContactDetailtViews=Views('ContactDetailViews', generics.RetrieveDestroyAPIView, Contact, ContactSerializer)
+AddImageDetailViews=Views('AddImageDetailViews', generics.RetrieveDestroyAPIView, AddImage, AddImageSerializer)
 ProfileDetailViews=Views('ProfileDetailViews', generics.RetrieveAPIView, Profil, ProfilSerializer)
 MessageDetailViews=Views('MessageDetailViews', generics.RetrieveUpdateDestroyAPIView, Message, MessageSerializer)
 

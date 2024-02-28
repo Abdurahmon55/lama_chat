@@ -20,7 +20,7 @@ function Profil() {
             <span onClick={()=>page('stories')} className='cursor-pointer'>My stories</span>
         </div>
         <div className='border-b border-white py-2 hover:text-blue-500'>
-            <span className='cursor-pointer'>Save Message</span>
+            <span onClick={()=>page('save')} className='cursor-pointer'>Save Message</span>
         </div>
         <div className='border-b border-white py-2 hover:text-blue-500'>
             <span onClick={()=>page('add')} className='cursor-pointer'>Add stories</span>

@@ -4,14 +4,13 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../data/authSlice';
 import { VscChromeClose } from "react-icons/vsc";
-import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Search() {
     const authId = useSelector(selectAuth)
+    const naviget = useNavigate()
     const [data, err] = useFetch('http://127.0.0.1:8000/api/v1/profil/')
-    // const [auth, error] = useFetch(`http://127.0.0.1:8000/api/v1/profil/contact/`)
     const [toggol, setToggol] = useState(false)
-    const [item, setItem] = useState(null)
     const [change, setChange] = useState()
 
     const handelChange = (value) => {
@@ -19,12 +18,20 @@ function Search() {
         setToggol(true)
     }
 
-    const handelSubmit=async()=>{
-        await axios.post('http://127.0.0.1:8000/api/v1/profil/contact/', {
-            your_boolean_field: true,
-            sender: authId,
-            contact:[change],
-        })
+    const handelSubmit = async () => {
+        try {
+            await axios.post('http://127.0.0.1:8000/api/v1/profil/contact/', {
+                your_boolean_field: true,
+                sender: authId,
+                contact: [change],
+            })
+                .then(res => console.log(res))
+                .catch(err => console.log(err))
+
+        }
+        catch {
+            console.log('hato');
+        }
     }
 
     // console.log ();
@@ -44,7 +51,7 @@ function Search() {
                                 </button>
                             </div>
                         ))}
-                        
+
                     </form>
 
                 </div> : null}

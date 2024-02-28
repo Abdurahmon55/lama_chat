@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { selectPgae, setToggol } from '../../data/authSlice'
 import AddImageProfil from './AddImageProfil'
+import Save from './Save'
 import Stores from './Stores'
 
 function Modal() {
@@ -15,6 +16,7 @@ function Modal() {
         </div>
         {page && page=='stories' ? <div><Stores/></div> : null}
         {page && page=='add' ? <div><AddImageProfil/></div> : null}
+        {page && page=='save' ? <div><Save/></div> : null}
     </div>
   )
 }

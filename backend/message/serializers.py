@@ -30,6 +30,11 @@ class ProfilSerializer(serializers.ModelSerializer):
         model=Profil
         fields = '__all__'
 
+class SaveSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=SaveMessage
+        fields = '__all__'
+
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User

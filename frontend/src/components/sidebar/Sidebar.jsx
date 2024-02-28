@@ -28,7 +28,7 @@ function Sidebar() {
                 <div className='flex'>
                     {detail && detail[0] ? <img className='w-8 m-2 rounded-full' src={detail && detail[0].image} alt="" /> : <img className='w-8 m-2 rounded-full' src={userImg} alt="" />}
                     <div className='flex flex-col  justify-center items-center'>
-                        <span onClick={()=>setToggol(true)} className='cursor-pointer hover:text-blue-500'>{profil && profil[0].name}</span>
+                        <span onClick={()=>setToggol(!toggol)} className='cursor-pointer hover:text-blue-500'>{profil && profil[0].name}</span>
                         <form onSubmit={sigiOut} action="">
                             <button className='hover:bg-amber-300 bg-amber-400 px-1 rounded-md'>sing out</button>
                         </form>

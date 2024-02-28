@@ -38,7 +38,7 @@ function Contact() {
             </div>
             <form onSubmit={contactDetail} className='text-lg flex gap-2'>
                 <i className='hover:text-blue-500 cursor-pointer'><IoIosVideocam /></i>
-                <i onClick={()=>setToggol(true)} className='hover:text-blue-500 cursor-pointer '><IoPersonSharp /></i>
+                <i onClick={()=>setToggol(!toggol)} className='hover:text-blue-500 cursor-pointer '><IoPersonSharp /></i>
                 <button className='hover:text-blue-500 cursor-pointer'><LuMoreVertical /></button>
             </form>
             {toggol ? <div className='h absolute top-14 right-0 bg-slate-400 w-full'>
