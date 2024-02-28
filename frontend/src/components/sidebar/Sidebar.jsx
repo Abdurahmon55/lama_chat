@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux'
 import ContactName from './ContactName'
 import Search from './Search'
 import { useState } from 'react'
-import Profil from './Profil'
+import Profil from '../profil/Profil'
 
 function Sidebar() {
     const authId = useSelector(selectAuth)
