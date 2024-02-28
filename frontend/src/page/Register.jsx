@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 function Register() {
     const data = [
         { name: 'username', type:'text', id: 1 },
-        { name: 'email', type:'email', id: 2 },
         { name: 'password1', type:'password', id: 3 },
         { name: 'password2', type:'password', id: 4 },
     ]
@@ -17,11 +16,16 @@ function Register() {
         try{
         const response= await axios.post('http://127.0.0.1:8000/api/v1/registration/', {
                 username:value.username,
-                email:value.email,
                 password1:value.password1,
                 password2:value.password2,
             })
             if(response.status==204){
+                const res = await axios.get(`http://127.0.0.1:8000/api/v1/user/?search=${value.username}`)
+                const userId = await res.data[0].id
+                await axios.post('http://127.0.0.1:8000/api/v1/profil/', {
+                    name:value.username,
+                    user:userId,
+                })
                 naviget('/login/')
             }
         }

@@ -1,57 +1,50 @@
 import React from 'react'
 import useFetch from '../../hook/useFetch'
 import userImg from '../../image/default.jpg'
-import { Link, useNavigate } from 'react-router-dom'
-import { selectAuth, setContact } from '../../data/authSlice'
-import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { selectAuth } from '../../data/authSlice'
+import { useSelector } from 'react-redux'
+import ContactName from './ContactName'
+import Search from './Search'
+import { useState } from 'react'
+import Profil from './Profil'
+
 function Sidebar() {
-    const [contact, error] = useFetch('http://127.0.0.1:8000/api/v1/user/')
     const authId = useSelector(selectAuth)
-    const dispatch=useDispatch()
-    const auth = contact && contact.find((item)=>item.id==authId)
+    const [toggol, setToggol] = useState(false)
     const naviget = useNavigate()
 
     const sigiOut = () => {
         localStorage.clear()
         naviget('/login/')
     }
-    
-    const senData=(id)=>{
-        localStorage.setItem('id', id)
-        dispatch(setContact(id))
-    }
+    const [profil, err] = useFetch(`http://127.0.0.1:8000/api/v1/profil/?user=${authId}`)
+    const [detail, error] = useFetch(`http://127.0.0.1:8000/api/v1/profil/image/?profil=${authId}`)
+
     return (
         <div>
-            <div className='text-white bg-slate-500 p-2 flex justify-between items-center'>
+            <div className='text-white bg-slate-500 p-2 flex justify-between items-center relative'>
                 <div><h2 className='text-xs font-bold hover:text-blue-500 cursor-pointer'>Lama chat</h2></div>
                 <div className='flex'>
-                    <img className='w-8 m-2 rounded-full' src={userImg} alt="" />
-                    <div className='flex flex-col  justify-center'>
-                        <span>{auth && auth.username}</span>
+                    {detail && detail[0] ? <img className='w-8 m-2 rounded-full' src={detail && detail[0].image} alt="" /> : <img className='w-8 m-2 rounded-full' src={userImg} alt="" />}
+                    <div className='flex flex-col  justify-center items-center'>
+                        <span onClick={()=>setToggol(true)} className='cursor-pointer hover:text-blue-500'>{profil && profil[0].name}</span>
                         <form onSubmit={sigiOut} action="">
                             <button className='hover:bg-amber-300 bg-amber-400 px-1 rounded-md'>sing out</button>
                         </form>
 
                     </div>
                 </div>
+                {toggol ? <div className='absolute top-16 bg-slate-400 p-2 w-full right-0'><Profil/>
+                <div className='text-end'><button onClick={()=>setToggol(false)} className='hover:bg-amber-300 bg-amber-400 px-1 rounded-md mt-2 '>close</button></div>
+                </div> : null}
             </div>
             <div>
-                <input className='bg-transparent p-2 w-full' type="text" placeholder='search' />
+                <Search />
             </div>
             <div className='h-[50vh] overflow-y-scroll'>
-                {contact && contact.map((item) => (
-                    <div key={item.id} >
-                        {item.id==authId ? null :
-                        <div className='flex gap-2 hover:bg-slate-500 p-2 cursor-pointer'>
-                            <div>
-                                <img className='w-8 rounded-full' src={userImg} alt="" />
-                            </div>
-                            <div onClick={()=>senData(item.id)} className='flex flex-col'>
-                                <span className='text-xs font-semibold'>{item.username}</span>
-                                <span className='text-xs'>Lorem ipsum dolor sit.</span>
-                            </div>
-                        </div>  }
-                    </div>
+                {!profil ? null : profil && profil[0].profil.map((item, index) => (
+                    <ContactName key={index}{...item} />
                 ))}
             </div>
         </div>

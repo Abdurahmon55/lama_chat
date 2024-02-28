@@ -4,12 +4,17 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
+
 urlpatterns = [
     path('profil/', ProfileViews.as_view()),
-    path('profile/contact/', ContactViews.as_view()),
-    path('profile/image/', AddImageViews.as_view()),
-    path('messages/', MessageViews.as_view()),
-    path('messages/sendImage', SendImageViews.as_view()),
+    path('user/', UserViews.as_view()),
+    path('profil/<int:pk>/', ProfileDetailViews.as_view()),
+    path('profil/contact/', ContactViews.as_view()),
+    path('profil/contact/<int:pk>/', ContactDetailtViews.as_view()),
+    path('profil/image/', AddImageViews.as_view()),
+    path('send/messages/', MessageViews.as_view()),
+    path('send/messages/<int:pk>/', MessageDetailViews.as_view()),
+    path('send/sendImage/', SendImageViews.as_view()),
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]

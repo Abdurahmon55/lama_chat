@@ -16,13 +16,12 @@ function Login() {
     const authId=useSelector(selectAuth)
 
     const handelSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         const response = await axios.post('http://127.0.0.1:8000/api/v1/token/', {
             username: login.username,
             password: login.password,
         })
         if (response) {
-            console.log(response.data);
             const token  = await response.data.access;
             localStorage.setItem('token', token);
             naviget('/')

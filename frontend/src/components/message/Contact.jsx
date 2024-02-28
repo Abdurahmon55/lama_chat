@@ -9,29 +9,38 @@ import { useSelector } from 'react-redux';
 import { selectContact } from '../../data/authSlice';
 
 function Contact() {
-    const [contactInfo, setContactInfo]=useState()
+    const [contactInfo, setContactInfo] = useState()
+    const [toggol, setToggol] = useState(false)
+    // const [contact, setContact]=useState()
     const contactId = useSelector(selectContact)
 
-    useEffect(()=>{
+    useEffect(() => {
         const contact = localStorage.getItem('id')
-        if(contact){
-            axios.get(`http://127.0.0.1:8000/api/v1/user/${contactId ? contactId : contact}/`)
-            .then(res=>setContactInfo(res.data))
+        if (contact) {
+            axios.get(`http://127.0.0.1:8000/api/v1/profil/${contactId ? contactId : contact}/`)
+                .then(res => setContactInfo(res.data))
         }
-    },[contactId])
+    }, [contactId])
 
-  return (
-    <div className='p-5 bg-slate-400 flex justify-between items-center'>
-        <div>
-            <span>{contactInfo && contactInfo.username}</span>
+    const contactDetail = async () => {
+        const response = await axios.get('http://127.0.0.1:8000/api/v1/profil/contact/')
+        const detail = await response.data.filter((item) => item.contact == contactInfo.id)
+        localStorage.removeItem('id')
+        await axios.delete(`http://127.0.0.1:8000/api/v1/profil/contact/${detail[0].id}/`)
+    }
+    // console.log(contact);
+    return (
+        <div className='p-5 bg-slate-400 flex justify-between items-center'>
+            <div>
+                <span>{contactInfo ? contactInfo.name : null}</span>
+            </div>
+            <form onSubmit={contactDetail} className='text-lg flex gap-2'>
+                <i className='hover:text-blue-500 cursor-pointer'><IoIosVideocam /></i>
+                <i className='hover:text-blue-500 cursor-pointer'><IoPersonSharp /></i>
+                <button className='hover:text-blue-500 cursor-pointer'><LuMoreVertical /></button>
+            </form>
         </div>
-        <div className='text-lg flex gap-2'>
-            <i className='hover:text-blue-500 cursor-pointer'><IoIosVideocam/></i>
-            <i className='hover:text-blue-500 cursor-pointer'><IoPersonSharp/></i>
-            <i className='hover:text-blue-500 cursor-pointer'><LuMoreVertical/></i>
-        </div>
-    </div>
-  )
+    )
 }
 
 export default Contact

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAuth, selectAuth } from './data/authSlice'
 import { jwtDecode } from 'jwt-decode'
 import Message from './components/message/Message'
+import axios from 'axios'
 function App() {
 
   const authId = useSelector(selectAuth)

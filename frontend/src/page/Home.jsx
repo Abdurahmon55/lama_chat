@@ -12,7 +12,7 @@ function Home() {
         <div className='row-span-3 col-span-2 '><Sidebar/></div>
         <div className='row-span-3 col-span-3 flex flex-col  h-full '>
         <div ><Contact/></div>
-        <div className='h-full flex items-end'>
+        <div className='h-full'>
          <Message/>
         </div>
         <div><SendMessage/></div>
