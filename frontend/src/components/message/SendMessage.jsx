@@ -6,7 +6,6 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../data/authSlice';
-import { useEffect } from 'react';
 
 function SendMessage() {
   const [messages, setMessage]=useState()

@@ -7,15 +7,12 @@ import { IoPersonSharp } from "react-icons/io5";
 import { LuMoreVertical } from "react-icons/lu";
 import { useSelector } from 'react-redux';
 import { selectContact } from '../../data/authSlice';
-import useFetch from '../../hook/useFetch';
 
 function Contact() {
     const [contactInfo, setContactInfo] = useState()
     const [toggol, setToggol] = useState(false)
-    // const [contact, setContact]=useState()
     const contactId = useSelector(selectContact)
    
-
     useEffect(() => {
         const contact = localStorage.getItem('id')
         if (contact) {

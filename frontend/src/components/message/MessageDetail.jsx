@@ -2,8 +2,6 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../../data/authSlice'
-import { FaSave } from "react-icons/fa";
-import { useEffect } from 'react';
 import SenderMessage from './SenderMessage';
 
 function MessageDetail({ message, sender, id, image, time, contact, your_boolean_field }) {

@@ -4,11 +4,9 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { selectAuth } from '../../data/authSlice';
 import { VscChromeClose } from "react-icons/vsc";
-import { useNavigate } from 'react-router-dom';
 
 function Search() {
     const authId = useSelector(selectAuth)
-    const naviget = useNavigate()
     const [data, err] = useFetch('http://127.0.0.1:8000/api/v1/profil/')
     const [toggol, setToggol] = useState(false)
     const [change, setChange] = useState()
@@ -34,7 +32,6 @@ function Search() {
         }
     }
 
-    // console.log ();
     return (
         <div>
             <label htmlFor="">
