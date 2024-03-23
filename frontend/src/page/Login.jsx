@@ -12,11 +12,9 @@ function Login() {
     ]
     const [login, setLogin] = useForm()
     const naviget = useNavigate()
-    const dispatch=useDispatch()
     const authId=useSelector(selectAuth)
 
-    const handelSubmit = async (e) => {
-        e.preventDefault()
+    const handelSubmit = async () => {
         const response = await axios.post('http://127.0.0.1:8000/api/v1/token/', {
             username: login.username,
             password: login.password,
@@ -29,6 +27,7 @@ function Login() {
         else {
             console.log('error something');
         }
+        window.location.reload()
     }
 
     return (
@@ -38,17 +37,17 @@ function Login() {
                 <span>Login</span>
             </div>
 
-            <form onSubmit={handelSubmit} action="">
+            <div>
                 {data.map((item) => (
                     <label key={item.id} htmlFor="">{item.name}
                         <input name={item.name} onChange={setLogin} className='w-full bg-transparent border-b-2 border-cyan-500' type={item.type} />
                     </label>
                 ))}
                 <div className='flex justify-between'>
-                    <button className='bg-cyan-500 mt-4 px-2 rounded-md text-white hover:bg-cyan-400'>continum</button>
+                    <button onClick={handelSubmit} className='bg-cyan-500 mt-4 px-2 rounded-md text-white hover:bg-cyan-400'>continum</button>
                     <Link to='/register/' className='bg-orange-500 mt-4 px-2 py-1 rounded-md text-white hover:bg-orange-400'>creat account</Link>
                 </div>
-            </form>
+            </div>
 
         </div>
     )

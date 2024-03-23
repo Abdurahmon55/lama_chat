@@ -12,6 +12,8 @@ def serializer(name, models):
 SaveMessageSerailizer=serializer('SaveMessageSerailizer', SaveMessage)
 SendMessageSerializer=serializer('SendMessageSerializer', SendMessage)
 ContactSerializer=serializer('ContactSerializer', Contact)
+ProfileDetailSerializer=serializer('ProfileDetailSerializer', ProfileDetail)
+PostSerializer=serializer('PostSerializer', Post)
 
 class MessageSerailizer(serializers.ModelSerializer):
     messages = SendMessageSerializer(many=True, read_only = True)
@@ -20,11 +22,10 @@ class MessageSerailizer(serializers.ModelSerializer):
         fields='__all__'   
 
 class ProfileSerailizer(serializers.ModelSerializer):
+    post=PostSerializer(many=True, read_only = True)
+    detail=ProfileDetailSerializer(many=True, read_only = True)
     contacts = ContactSerializer(many=True, read_only = True)
     save =  SaveMessageSerailizer(many=True, read_only = True)
-    send = MessageSerailizer(many=True, read_only = True)
-    get = MessageSerailizer(many=True, read_only = True)
     class Meta:
         model=get_user_model()
-        fields=['id', 'last_login', 'username', 'send', 'get', 'save', 'contacts' ] 
-
+        fields=['id', 'last_login', 'username', 'save', 'contacts', 'detail', 'post' ] 

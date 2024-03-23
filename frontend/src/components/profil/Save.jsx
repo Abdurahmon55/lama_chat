@@ -1,19 +1,25 @@
 import React from 'react'
+import { useState } from 'react'
+import { MdDelete } from 'react-icons/md'
 import { useSelector } from 'react-redux'
 import { selectAuth } from '../../data/authSlice'
 import useFetch from '../../hook/useFetch'
+import Detail from './Detail'
 
 function Save() {
     const auth = useSelector(selectAuth)
-    const [save, err]=useFetch(`http://127.0.0.1:8000/api/v1/profil/save/?profil=${auth}`)
-    console.log(save);
+    const [toggol, setToggol]=useState(false)
+
+    const deleteSaveMessage=()=>{
+        
+    }
   return (
-    <div >
+    <div className='p-2'>
         <div className='text-center font-bold'><span>Save</span></div>
         <div>
-            {save && save[0] ? save.map((item)=>(
+            {auth && auth.save[0] ? auth.save.map((item)=>(
                 <div key={item.id}>
-                    <span className='text-black'>{item.message}</span>
+                    <Detail item={item} url='http://127.0.0.1:8000/api/v1/profil/message/save/' imageH='w-44'/>
                 </div>
             )) : <span>you have not save message yet</span>}
         </div>

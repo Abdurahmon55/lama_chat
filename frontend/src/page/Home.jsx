@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Route, Routes } from 'react-router-dom'
-import Contact from '../components/message/Contact'
+import ContactDetail from '../components/message/ContactDetail'
 import Message from '../components/message/Message'
 import SendMessage from '../components/message/SendMessage'
 import Modal from '../components/profil/Modal'
@@ -20,7 +20,7 @@ function Home() {
         <div className='row-span-3 col-span-2 '><Sidebar/></div>
         {toggol ? <div className='row-span-3 col-span-3 bg-white h-full'><Modal/> </div> :
         <div className='row-span-3 col-span-3 flex flex-col  h-full '>
-        <div ><Contact/></div>
+        <div ><ContactDetail/></div>
         <div className='h-full'>
          <Message/>
         </div>

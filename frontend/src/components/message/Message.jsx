@@ -4,59 +4,41 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { selectAuth, selectContact } from '../../data/authSlice'
-import MessageDetail from './MessageDetail'
+import ReadMessage from './ReadMessage'
 
 function Message() {
     const contact = useSelector(selectContact)
     const auth = useSelector(selectAuth)
     const [data, setData] = useState()
-    const [imageData, setImageData] = useState()
-
-    const getImge = async () => {
-        const getId = localStorage.getItem('id')
-        try {
-            const response = await axios.get(`http://127.0.0.1:8000/api/v1/send/sendImage/?sender=${auth && auth}&contact=${contact ? contact : getId}`)
-            const send = await axios.get(`http://127.0.0.1:8000/api/v1/send/sendImage/?sender=${contact ? contact : getId}&contact=${auth && auth}`)
-            const rest = response && send && [...response.data, ...send.data]
-            setImageData(rest.sort((a, b) => {
-                return a.id - b.id
-            }))
-        }
-        catch {
-            console.log('hato');
-        }
-    }
 
     useEffect(() => {
+        const contactId = localStorage.getItem('contactId')
+        const GetMessage = async () => {
+            const id = contactId ? contactId : null
+            if (id) {
+                const senderMessage = await axios.get(`http://127.0.0.1:8000/api/v1/profil/message/?sender=${auth && auth.id}&contact=${id}`)
+                const contactMessage = await axios.get(`http://127.0.0.1:8000/api/v1/profil/message/?sender=${id}&contact=${auth && auth.id}`)
 
-        const getInfo = async () => {
-            const getId = localStorage.getItem('id')
-            try {
-                const response = await axios.get(`http://127.0.0.1:8000/api/v1/send/messages/?sender=${auth && auth}&contact=${contact ? contact : getId}`)
-                const send = await axios.get(`http://127.0.0.1:8000/api/v1/send/messages/?sender=${contact ? contact : getId}&contact=${auth && auth}`)
-                const res = response && send && [...response.data, ...send.data]
-                setData(res.sort((a, b) => {
+                const rest = senderMessage && contactMessage && [...senderMessage.data, ...contactMessage.data]
+                setData(rest.sort((a, b) => {
                     return a.id - b.id
                 }))
             }
-            catch {
-                console.log('hato');
-            }
         }
-        getInfo()
-        getImge()
-
+        GetMessage()
     }, [contact])
-    console.log();
 
     return (
         <div className=' flex flex-col justify-end '>
-            <div className='w-full h-[50vh] overflow-y-scroll'>
+            <div className='w-full h-[50vh] overflow-y-scroll px-2'>
                 {data && data.map((item) => (
-                    <MessageDetail key={item.id}{...item} />
-                ))}
-                {imageData && imageData.map((item) => (
-                    <MessageDetail key={item.id}{...item} />
+                    <div key={item.id} className='p-1 flex  '>
+                    {item.sender == auth.id ?
+                        <ReadMessage message={item.messages} stayle='bg-slate-400' hadStayle='w-10/12 flex mr-auto' senderId={item.sender} contactId={item.contact} />
+                        :
+                        <ReadMessage message={item.messages} hadStayle=' flex  w-10/12  ml-auto ' stayle='bg-slate-500 ml-auto ' senderId={item.sender} contactId={item.contact} />
+                    }
+                </div>
                 ))}
             </div>
 
